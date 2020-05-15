@@ -10,8 +10,9 @@
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
 
-<BorderPane prefHeight="408.0" prefWidth="441.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polito.tdp.crimes.FXMLController">
+<BorderPane prefHeight="408.0" prefWidth="441.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polito.tdp.crimes.FXMLController">
    <top>
       <Label text="DenverCrimes" BorderPane.alignment="CENTER" />
    </top>
@@ -63,7 +64,10 @@
                   <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                </VBox.margin>
             </GridPane>
-            <TextArea fx:id="txtResult" prefHeight="318.0" prefWidth="441.0" />
+            <TextArea fx:id="txtResult" prefHeight="318.0" prefWidth="441.0">
+               <font>
+                  <Font name="Courier" size="13.0" />
+               </font></TextArea>
          </children>
       </VBox>
    </right>
