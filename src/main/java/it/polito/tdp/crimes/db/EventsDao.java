@@ -168,7 +168,7 @@ public class EventsDao {
 				"month(e1.reported_date) =?  and month(e2.reported_date) =? and " + 
 				"e1.`neighborhood_id` = e2.`neighborhood_id` " ; 
 		
-		//vincolo del mese rimane, GIUSTO?????
+		
 		
 		Integer quartieri = null;
 		

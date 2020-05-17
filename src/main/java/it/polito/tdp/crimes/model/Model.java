@@ -100,8 +100,8 @@ public class Model {
 		
 	}
 	
-	public List<Arco> archi(){
-		
+	public List<Arco> archi(){ //non serve 
+		 
 		List<Arco> archi = new LinkedList<>();
 		
 		for(DefaultWeightedEdge e : grafo.edgeSet()) {
@@ -135,7 +135,7 @@ public class Model {
 		List<Reato> parziale = new LinkedList<>();
 		
 		this.bestPercorso = new LinkedList<>();
-		this.nVerticiBest=0;
+		this.nVerticiBest=0; //avrei potuto inizializzare nVerticiBest = bestPercorso.size() (=0)
 		
 		parziale.add(r1);
 		cerca(r1, r2, parziale, 0);
@@ -147,15 +147,15 @@ public class Model {
 	
 	
 	
-	
-	
+
 	private void cerca(Reato r1, Reato r2, List<Reato> parziale, int livello){
 		
-		if(bestPercorso.size() == 0 && r1.equals(r2)) {
+		// if(r1 uguale r2) ==> if(parziale.size()>nVerticiBest) ==> riaggiorna
+		
+		if(bestPercorso.size() == 0 && r1.equals(r2)) { //r2 già aggiunto
 			
 			nVerticiBest = parziale.size();
 			bestPercorso = new LinkedList<>(parziale); //!! 
-			System.out.println(bestPercorso+"\n");
 			
 			return;
 		}
@@ -167,7 +167,6 @@ public class Model {
 				nVerticiBest = parziale.size();
 				bestPercorso = new LinkedList<>(parziale);
 			}
-			System.out.println(bestPercorso+"\n");
 			
 			return;
 			
@@ -185,58 +184,9 @@ public class Model {
 				parziale.remove(r);
 			}
 		}
+}
 		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-	}
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
+
 	
 	
 	

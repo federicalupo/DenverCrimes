@@ -6,6 +6,7 @@ package it.polito.tdp.crimes;
 
 import java.net.URL;
 import java.time.Month;
+import java.util.List;
 import java.util.Locale;
 import java.util.ResourceBundle;
 
@@ -13,6 +14,7 @@ import org.jgrapht.graph.DefaultWeightedEdge;
 
 import it.polito.tdp.crimes.model.Arco;
 import it.polito.tdp.crimes.model.Model;
+import it.polito.tdp.crimes.model.Reato;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -53,8 +55,12 @@ public class FXMLController {
     	
     	Arco arco = this.boxArco.getValue();
     	
+    	List<Reato> percorso = model.calcolaPercorso(arco.getReato1(), arco.getReato2());
     	
-    	this.txtResult.setText(model.calcolaPercorso(arco.getReato1(), arco.getReato2()).toString());
+    	this.txtResult.appendText("Percorso migliore:\n\n");
+    	for(Reato r: percorso) {
+    		this.txtResult.appendText(r+"\n");	
+    	}
     	
     }
 
@@ -68,13 +74,15 @@ public class FXMLController {
     	
     	model.creaGrafo(mese, categoria);
     	
+    	this.txtResult.appendText("Elenco archi con peso > peso medio\n\n");
     	for(Arco a: model.archiFiltro()) {
-    		txtResult.appendText(String.format("Reato: %-25s Reato: %-25s numeroQuartieri: %-25d\n" , a.getReato1(),a.getReato2(),a.getQuartieri()));
+    		txtResult.appendText(String.format("Reato: %-20s Reato: %-20s numeroQuartieri: %-25d\n" , a.getReato1(),a.getReato2(),a.getQuartieri()));
     		
     	}
     	
-    	this.boxArco.getItems().addAll(model.archi());
-    	this.boxArco.setValue(model.archi().get(0));
+    	//this.boxArco.getItems().addAll(model.archi()); => tutti archi
+    	this.boxArco.getItems().addAll(model.archiFiltro()); //archi con filtro
+    	this.boxArco.setValue(model.archiFiltro().get(0));
     	
 
     }
