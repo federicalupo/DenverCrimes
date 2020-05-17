@@ -26,7 +26,7 @@ public class Arco {
 
 	@Override
 	public String toString() {
-		return  reato1 + " " + reato2 ;
+		return  reato1 + " - " + reato2 ;
 	}
 	
 	

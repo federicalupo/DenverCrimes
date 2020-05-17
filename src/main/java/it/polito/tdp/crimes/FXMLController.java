@@ -39,7 +39,7 @@ public class FXMLController {
     private Button btnAnalisi; // Value injected by FXMLLoader
 
     @FXML // fx:id="boxArco"
-    private ComboBox<?> boxArco; // Value injected by FXMLLoader
+    private ComboBox<Arco> boxArco; // Value injected by FXMLLoader
 
     @FXML // fx:id="btnPercorso"
     private Button btnPercorso; // Value injected by FXMLLoader
@@ -49,12 +49,19 @@ public class FXMLController {
 
     @FXML
     void doCalcolaPercorso(ActionEvent event) {
-
+    	this.txtResult.clear();
+    	
+    	Arco arco = this.boxArco.getValue();
+    	
+    	
+    	this.txtResult.setText(model.calcolaPercorso(arco.getReato1(), arco.getReato2()).toString());
+    	
     }
 
     @FXML
     void doCreaGrafo(ActionEvent event) {
     	this.txtResult.clear();
+    	this.boxArco.getItems().clear();
     	
     	int mese = Month.valueOf(this.boxMese.getValue()).getValue();
     	String categoria = this.boxCategoria.getValue();
@@ -65,6 +72,9 @@ public class FXMLController {
     		txtResult.appendText(String.format("Reato: %-25s Reato: %-25s numeroQuartieri: %-25d\n" , a.getReato1(),a.getReato2(),a.getQuartieri()));
     		
     	}
+    	
+    	this.boxArco.getItems().addAll(model.archi());
+    	this.boxArco.setValue(model.archi().get(0));
     	
 
     }

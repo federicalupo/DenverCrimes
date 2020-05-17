@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import org.jgrapht.Graphs;
 import org.jgrapht.graph.DefaultWeightedEdge;
@@ -17,6 +18,8 @@ public class Model {
 	private EventsDao dao ;
 	private SimpleWeightedGraph<Reato, DefaultWeightedEdge> grafo;
 	private Map<String, Reato> idMap;
+	private int nVerticiBest;
+	private List<Reato> bestPercorso;
 	
 	public Model() {
 		dao = new EventsDao();
@@ -96,6 +99,140 @@ public class Model {
 		
 		
 	}
+	
+	public List<Arco> archi(){
+		
+		List<Arco> archi = new LinkedList<>();
+		
+		for(DefaultWeightedEdge e : grafo.edgeSet()) {
+			
+				Arco arco = new Arco(grafo.getEdgeSource(e), grafo.getEdgeTarget(e), ((int)grafo.getEdgeWeight(e)));
+				archi.add(arco);
+			
+		}
+		return archi;
+	}
+	
+	/**RICORSIONE
+	 * 
+	 * livello = nodi, reato, adiacente
+	 * sol parziale = lista nodi
+	 * 
+	 * sol completa = soluzione con max numero nodi
+	 * 
+	 * livello + 1 = trovo adiacenti, per ogni nodo, lo aggiungo se non è presente in parziale
+	 * 	 backtracking -> rimuovo elemento => perchè voglio provare tutte le strade 
+	 * 
+	 *terminazione :  se adiacenti = 0, return; se nodo passato = secondo reato, controllo numero nodi (non vado piu avanti)
+	 *		se soluzione migliore.size() = 0 e sono arrivata al secondo reato, salva il parziale e il numero di nodi
+	 *		altrimenti, se numero di nodi parziale > numero nodi migliore -> salva 
+	 *
+	 *parziale -> lista Reato
+	 */
+	
+	public List<Reato> calcolaPercorso(Reato r1, Reato r2){
+		
+		List<Reato> parziale = new LinkedList<>();
+		
+		this.bestPercorso = new LinkedList<>();
+		this.nVerticiBest=0;
+		
+		parziale.add(r1);
+		cerca(r1, r2, parziale, 0);
+		
+		
+		return bestPercorso;
+	
+	}
+	
+	
+	
+	
+	
+	private void cerca(Reato r1, Reato r2, List<Reato> parziale, int livello){
+		
+		if(bestPercorso.size() == 0 && r1.equals(r2)) {
+			
+			nVerticiBest = parziale.size();
+			bestPercorso = new LinkedList<>(parziale); //!! 
+			System.out.println(bestPercorso+"\n");
+			
+			return;
+		}
+		
+		if(bestPercorso.size() > 0 && r1.equals(r2)) {
+		
+			
+			if(parziale.size() > nVerticiBest) {
+				nVerticiBest = parziale.size();
+				bestPercorso = new LinkedList<>(parziale);
+			}
+			System.out.println(bestPercorso+"\n");
+			
+			return;
+			
+		}
+		
+		if(Graphs.neighborListOf(this.grafo, r1).size()==0) {
+			return;
+		}
+		
+		
+		for(Reato r : Graphs.neighborListOf(this.grafo, r1)) {
+			if(! parziale.contains(r)) {
+				parziale.add(r);
+				cerca(r, r2, parziale, livello+1);
+				parziale.remove(r);
+			}
+		}
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	
 	
 	
